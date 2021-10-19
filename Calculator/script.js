@@ -54,14 +54,14 @@ function changeDisplay(newNum){
         calculatorInfo.inputNumber2 = "";
         calculatorInfo.inputOperator = newNum;2
     // check if the operator has a value, if true, the button pressed goes to inputnumber2
-    } else if (numberArray.includes(parseInt(newNum)) && operatorArray.includes(calculatorInfo.inputOperator)){
+    } else if (numberArray.includes(parseFloat(newNum)) && operatorArray.includes(calculatorInfo.inputOperator)){
         calculatorInfo.inputNumber2 += newNum;
-        calculatorInfo.currentSum = operate(calculatorInfo.inputOperator, parseInt(calculatorInfo.inputNumber1), parseInt(calculatorInfo.inputNumber2));
+        calculatorInfo.currentSum = operate(calculatorInfo.inputOperator, parseFloat(calculatorInfo.inputNumber1), parseFloat(calculatorInfo.inputNumber2));
         displayNum.textContent = calculatorInfo.inputNumber2;
     // Check if it's the first number pressed
-    } else if (numberArray.includes(parseInt(newNum))){
+    } else if (numberArray.includes(parseFloat(newNum))){
         calculatorInfo.inputNumber1 += newNum;
-        calculatorInfo.currentSum = parseInt(calculatorInfo.inputNumber1);
+        calculatorInfo.currentSum = parseFloat(calculatorInfo.inputNumber1);
         displayNum.textContent = calculatorInfo.inputNumber1;
     // Check if the button pressed is an operator.
     // set inputnumber1 to currentSum, so you can use the sum after pressing equals.   
@@ -85,18 +85,28 @@ buttonArray.forEach(button => {
 
 
 // A function that calls the operate function when the = button is pressed.
+// toFixed rounds up the currentSum to 2 decimals.
 function calculate(){
-    calculatorInfo.currentSum = operate(calculatorInfo.inputOperator, parseInt(calculatorInfo.inputNumber1), parseInt(calculatorInfo.inputNumber2));
+    calculatorInfo.currentSum = operate(calculatorInfo.inputOperator, parseFloat(calculatorInfo.inputNumber1), parseFloat(calculatorInfo.inputNumber2));
     calculatorInfo.inputNumber1 = "";
     calculatorInfo.inputNumber2 = "";
     calculatorInfo.inputOperator = "";
+    // If statement that checks if current sum has decimals, if it does, round up to three, otherwise show the number as normal.
+    // modulos is used to check.
+    if (calculatorInfo.currentSum % 1 !== 0){
+        calculatorInfo.currentSum = calculatorInfo.currentSum.toFixed(3);
+    };
     return displayNum.textContent = calculatorInfo.currentSum;
 };
 
 // Use the info from the calculatorInfo object to do math when = is pressed, then reset the info. 
 const equals = document.querySelector(".equalsButton");
 equals.addEventListener("click", () => {
-    calculate();
+    if (calculatorInfo.inputOperator === "" || calculatorInfo.inputNumber2 === ""){
+        // This is empty because you can't calculate if you don't have an operator or a num2.
+    } else {
+        calculate();
+    }
 });
 
 // make a clear button.
