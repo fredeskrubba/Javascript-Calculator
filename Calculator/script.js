@@ -119,7 +119,7 @@ function calculate(){
             // If statement that checks if current sum has decimals, if it does, round up to three, otherwise show the number as normal.
             // modulos is used to check.
             if (calculatorInfo.currentSum % 1 !== 0){
-                calculatorInfo.currentSum = calculatorInfo.currentSum.toFixed(3);
+                calculatorInfo.currentSum = calculatorInfo.currentSum.toFixed(2);
             };
             return displayNum.textContent = calculatorInfo.currentSum;
         }
@@ -151,4 +151,3 @@ let clearButton = document.querySelector(".clear");
 clearButton.addEventListener("click", ()=>{
     reset();
 });
-
