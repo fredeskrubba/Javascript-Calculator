@@ -113,7 +113,7 @@ function calculate(){
             return calculatorInfo.inputNumber2 = "";
         } else {
             calculatorInfo.currentSum = operate(calculatorInfo.inputOperator, parseFloat(calculatorInfo.inputNumber1), parseFloat(calculatorInfo.inputNumber2));
-            calculatorInfo.inputNumber1 = "";
+            calculatorInfo.inputNumber1 = String(calculatorInfo.currentSum);
             calculatorInfo.inputNumber2 = "";
             calculatorInfo.inputOperator = "";
             calculatorInfo.decimal1 = false;
@@ -163,7 +163,7 @@ function backspaceFunction(){
         displayNum.textContent = "Display";
         reset();
     } else if(calculatorInfo.inputNumber1 != "" && calculatorInfo.inputOperator === ""){
-        calculatorInfo.inputNumber1 = calculatorInfo.inputNumber1.substring(0, calculatorInfo.inputNumber1.length -1);
+        calculatorInfo.inputNumber1 = String(calculatorInfo.inputNumber1).substring(0, calculatorInfo.inputNumber1.length -1);
         if (calculatorInfo.inputNumber1 === ""){
             calculatorInfo.currentSum = 0;
         } else {
