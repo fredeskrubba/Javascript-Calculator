@@ -38,6 +38,7 @@ section{
     text-align: center;
     max-width: 300px;
     word-wrap: break-word;
+    min-height: 30px;
 }
 
 .input-field{

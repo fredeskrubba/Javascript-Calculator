@@ -38,6 +38,7 @@ const calculatorInfo = {
     // decimal 1 and 2 is to track if there's already been inserted a . in inputnumber1, and inputnumber2.
     decimal1: false,
     decimal2: false,
+    lastInput: "",
 };
 
 const displayNum = document.querySelector(".display");
@@ -93,6 +94,7 @@ const buttonArray = Array.from(buttonList);
 buttonArray.forEach(button => {
     button.addEventListener("click", ()=>{
         changeDisplay(button.textContent);
+        calculatorInfo.lastInput = button.textContent;
     });
 });
 
@@ -145,9 +147,44 @@ function reset(){
     calculatorInfo.currentSum = 0;
     calculatorInfo.decimal1 = false;
     calculatorInfo.decimal2 = false;
+
 };
 
-let clearButton = document.querySelector(".clear");
+const clearButton = document.querySelector(".clear");
 clearButton.addEventListener("click", ()=>{
     reset();
+});
+
+// Make a backspace button.
+const backspace = document.querySelector(".erase");
+
+function backspaceFunction(){
+    if (calculatorInfo.currentSum === ""){
+        displayNum.textContent = "Display";
+        reset();
+    } else if(calculatorInfo.inputNumber1 != "" && calculatorInfo.inputOperator === ""){
+        calculatorInfo.inputNumber1 = calculatorInfo.inputNumber1.substring(0, calculatorInfo.inputNumber1.length -1);
+        if (calculatorInfo.inputNumber1 === ""){
+            calculatorInfo.currentSum = 0;
+        } else {
+            calculatorInfo.currentSum = parseInt(calculatorInfo.inputNumber1);
+        }
+        displayNum.textContent = calculatorInfo.currentSum;
+    } else if (calculatorInfo.inputOperator != "" && calculatorInfo.inputNumber2 === ""){
+        calculatorInfo.inputOperator = "";
+    } else if (calculatorInfo.inputNumber1 != "" && calculatorInfo.inputOperator != ""){
+        calculatorInfo.inputNumber2 = calculatorInfo.inputNumber2.substring(0, calculatorInfo.inputNumber2.length -1);
+        displayNum.textContent = calculatorInfo.inputNumber2;
+        if (calculatorInfo.inputNumber2 === ""){
+            calculatorInfo.currentSum = calculatorInfo.inputNumber1;
+        }
+    }
+};
+
+backspace.addEventListener("click", ()=>{
+    if (calculatorInfo.currentSum === 0){
+        displayNum.textContent = "Display";
+    } else {
+        backspaceFunction();
+    }
 });
