@@ -82,6 +82,7 @@ function changeDisplay(newNum){
     } else if (operatorArray.includes(newNum)){
         calculatorInfo.inputNumber1 = String(calculatorInfo.currentSum);
         calculatorInfo.inputOperator = newNum;
+        displayNum.textContent = calculatorInfo.inputOperator;
     };
 };
 
@@ -122,7 +123,7 @@ function calculate(){
             // modulos is used to check.
             if (calculatorInfo.currentSum % 1 !== 0){
                 calculatorInfo.currentSum = calculatorInfo.currentSum.toFixed(2);
-            };
+            }
             return displayNum.textContent = calculatorInfo.currentSum;
         }
     };
@@ -135,6 +136,7 @@ equals.addEventListener("click", () => {
         // This is empty because you can't calculate if you don't have an operator or a num2.
     } else {
         calculate();
+        calculatorInfo.inputNumber1 = "";
     }
 });
 
@@ -159,7 +161,7 @@ clearButton.addEventListener("click", ()=>{
 const backspace = document.querySelector(".erase");
 
 function backspaceFunction(){
-    if (calculatorInfo.currentSum === ""){
+    if (calculatorInfo.currentSum === "" || calculatorInfo.currentSum === 0){
         displayNum.textContent = "Display";
         reset();
     } else if(calculatorInfo.inputNumber1 != "" && calculatorInfo.inputOperator === ""){
